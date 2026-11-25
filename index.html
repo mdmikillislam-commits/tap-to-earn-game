@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tap to Earn</title>
+<style>
+body {
+  margin:0;
+  background:#101827;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
+}
+.container {padding:25px 18px;}
+h1 {color:#42e89b;}
+.coins {
+  font-size:35px;
+  margin:25px;
+  color:#ffd34d;
+}
+#tap {
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:6px solid #42e89b;
+  background:#183d36;
+  color:white;
+  font-size:25px;
+  font-weight:bold;
+  margin:25px;
+}
+button {cursor:pointer;}
+.menu button {
+  padding:13px;
+  margin:6px;
+  border:0;
+  border-radius:10px;
+  background:#263d58;
+  color:white;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>💎 TAP TO EARN</h1>
+<p>ট্যাপ করুন আর কয়েন সংগ্রহ করুন</p>
+<div class="coins">🪙 <span id="coins">0</span></div>
+<button id="tap" onclick="earn()">TAP!</button>
+<p id="message">প্রতি ট্যাপে ১ কয়েন</p>
+<div class="menu">
+<button onclick="daily()">🎁 Daily Bonus</button>
+<button onclick="invite()">👥 Invite Friends</button>
+</div>
+<p id="bonus"></p>
+</div>
+<script>
+let coins = Number(localStorage.getItem("coins") || 0);
+let last = localStorage.getItem("daily") || "";
+function update(){
+ document.getElementById("coins").innerText=coins;
+ localStorage.setItem("coins",coins);
+}
+function earn(){
+ coins++;
+ update();
+}
+function daily(){
+ let today=new Date().toDateString();
+ if(last===today){
+  document.getElementById("bonus").innerText="আজকের বোনাস নেওয়া হয়েছে!";
+ }else{
+  coins+=100;
+  last=today;
+  localStorage.setItem("daily",last);
+  update();
+  document.getElementById("bonus").innerText="১০০ কয়েন বোনাস পেয়েছেন!";
+ }
+}
+function invite(){
+ document.getElementById("bonus").innerText="রেফারেল সুবিধা চালু করতে Telegram Bot সংযোগ প্রয়োজন।";
+}
+update();
+</script>
+</body>
+</html>
